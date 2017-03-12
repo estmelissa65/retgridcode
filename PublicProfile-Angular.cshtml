@@ -1,0 +1,170 @@
+@model Rg.Web.Models.ViewModels.ItemViewModel<int>
+
+@{
+    Layout = "filepath.cshtml";
+}
+@section styles {
+    <link href="~/Content/agentprofile.css" rel="stylesheet" />
+}
+
+<div class="" ng-controller="agentProfileController as profileCtrl">
+    <!--Realtor's BANNER-->
+    <div class="headerContainer">
+        <div class="row">
+            <div class="col-xs-12">
+                <img width="1403" class="img-responsive" ng-src="{{profileCtrl.selectedItem.bannerFileKey}}" />
+            </div>
+        </div>
+    </div>
+    <!--JUMP DOWN DIVS/LISTINGS-ARTICLES-ABOUT ME-->
+    <div class="row services">
+
+        <div class="col-md-4 col-xs-4">
+
+            <div class="box-icon box-icon-center box-icon-transparent box-icon-large">
+                <a class="box-icon-title" href="#listingsDiv" target="_self">
+                    <i class="noborder fa fa-home" id="myListingsIcon"></i>
+                    <h6>MY LISTINGS</h6>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="col-md-4 col-xs-4">
+
+            <div class="box-icon box-icon-center box-icon-transparent box-icon-large">
+                <a class="box-icon-title" href="#articlesDiv" target="_self">
+                    <i class="noborder fa fa-file-text-o" id="articlesIcon"></i>
+                    <h6>ARTICLES</h6>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="col-md-4 col-xs-4">
+
+            <div class="box-icon box-icon-center box-icon-transparent box-icon-large">
+                <a class="box-icon-title" href="#aboutMeDiv" target="_self">
+                    <i class="noborder fa fa-star" id="aboutMeIcon"></i>
+                    <h6>ABOUT ME</h6>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+    <!--TESTIMONIAL CAROUSEL/RATINGS-->
+    <div class="dark">
+        <div data-ng-controller="ratingsController as ratingsCtrl">
+            <uib-carousel interval="3000">
+                <uib-slide style="padding: 40px 20px 40px 20px; max-height: 300px;" ng-repeat="rate in ratingsCtrl.testimonial" active="slide.active" id="slide-{{rate.id}}">
+                    <img ng-if="rate.keyName" ng-src="https://sabio-training.s3-us-west-2.amazonaws.com/C25/{{rate.keyName}}?{{$index}}" style="margin:auto; width:60px; height:60px;" />
+                    <img ng-if="!rate.keyName" class="img-responsive" ng-src="//us.123rf.com/450wm/tony4urban/tony4urban1302/tony4urban130200001/17746154-bir-y%C3%BCz-resimsiz-%C3%A7ok-b%C3%BCy%C3%BCk-boy-bir-adam.jpg?ver=6" style="margin:auto; width:60px; height:60px;" />
+                    <p>{{rate.commentText}}</p>
+                    <cite>
+                        <span>{{rate.rating}}</span>
+                    </cite>
+                </uib-slide>
+            </uib-carousel>
+        </div>
+
+    </div>
+    <!--LISTINGS SLIDER-->
+    <div data-ng-controller="listing1Controller as listing1Ctrl" id="listingsDiv" class="container listings">
+        <article class="">
+            <!--carousel-->
+            <div class="col-md-6 col-xs-6">
+                <h2 class="center">HOT LISTING</h2>
+                <uib-carousel interval="3000">
+                    <uib-slide ng-repeat="slide in listing1Ctrl.listingMedia" active="slide.active" id="slide-{{slide.id}}" style="max-height: 330px;">
+                        <img ng-src="{{slide.mediaUrl}}?{{$index}}" style="margin:auto; min-width:100%; height:300px" />
+                        <p>
+                            {{slide.streetAddress}}<br />
+                            {{slide.bedroomsTotal}},{{slide.bathroomsFull}},{{slide.lotSizeSquareFeet}}<br />
+                            {{slide.listPrice}}
+                        </p>
+                    </uib-slide>
+                </uib-carousel>
+
+            </div>
+            <!--carousel-->
+            <div data-ng-controller="listing2Controller as listing2Ctrl" class="col-md-6 col-xs-6">
+                <h2>MY OFFICE'S LISTINGS</h2>
+                <carousel interval="3000">
+                    <slide ng-repeat="slide2 in listing2Ctrl.listingMedia2" active="slide.active" id="slide-{{slide2.id}}" style="max-height: 330px;">
+                        <img ng-src="{{slide2.mediaUrl}}?{{$index}}" style="margin:auto; min-width:100%; height:300px" />
+                        <p>
+                            {{slide2.streetAddress}}<br />
+                            {{slide2.bedroomsTotal}},{{slide2.bathroomsFull}},{{slide2.lotSizeSquareFeet}}<br />
+                            {{slide2.listPrice}}
+                        </p>
+                    </slide>
+                </carousel>
+            </div>
+            <!--carousel-->
+        </article>
+    </div>
+    <!-- EXISTING ARTICLE (optional)-->
+    <div class="parellex">
+        <div>
+            <h1 style="text-align: center; text-wrap: normal;"><span>Don't miss my article<br /> <a href="{{Curl}}">Trend: The All-Inclusive Luxury Master Suite</a></span></h1>
+        </div>
+    </div>
+    <!--ABOUT ME-->
+    <div name="aboutMeDiv" id="aboutMeDiv" class="container">
+        <article class="row">
+
+            <div class="col-md-5">
+                <div class="img-container">
+                    <figure>
+                        <img class="img-circle pull-right wow fadeInRightBig" ng-src="{{profileCtrl.selectedItem.agentProfileKey}}" data-wow-delay="0.3s" />
+                    </figure>
+                    <div class="pull-right">
+                        <a href="https://www.facebook.com/" class="social-icon social-icon-round social-icon-transparent social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+                            <i class="icon-facebook"></i>
+                            <i class="icon-facebook"></i>
+                        </a>
+                        <a href="http://www.linkedin.com/" class="social-icon social-icon-round social-icon-transparent social-linkedin" data-toggle="tooltip" data-placement="top" title="LinkedIn">
+                            <i class="icon-linkedin"></i>
+                            <i class="icon-linkedin"></i>
+                        </a>
+                        <a href="https://twitter.com/?lang=en" class="social-icon social-icon-round social-icon-transparent social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter">
+                            <i class="icon-twitter"></i>
+                            <i class="icon-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h3>Get to know the agent:</h3>
+                <p class="dropcap">
+                    {{profileCtrl.selectedItem.aboutMe}}
+                </p>
+
+            </div>
+        </article>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">rg.page.currentUserId = @Html.RawJson(Model.Item);</script>
+
+    @*//ajax scripts*@
+    <script src="~/Scripts/rg.services.listing.js"></script>
+    <script src="~/Scripts/rg.services.ratings.js"></script>
+    <script src="~/Scripts/rg.services.person.js"></script>
+    @* angular controllers *@
+    <script src="~/Scripts/app/agentPublicProfile/listings.controller.js"></script>
+    <script src="~/Scripts/app/agentPublicProfile/ratings.controller.js"></script>
+    <script src="~/Scripts/app/agentPublicProfile/agentProfile.controller.js"></script>
+    @* angular services *@
+    <script src="~/Scripts/app/services/listings.js"></script>
+    <script src="~/Scripts/app/services/ratings.js"></script>
+    <script src="~/Scripts/app/services/person.js"></script>
+
+    <script type="text/javascript">
+    </script>
+}
+
